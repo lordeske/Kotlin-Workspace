@@ -59,9 +59,15 @@ fun TipTimeLayout()
         mutableStateOf("")
     }
 
+    var percentInput by remember {
+        mutableStateOf("")
+    }
+
+
+    val percent = percentInput.toDoubleOrNull() ?: 0.0
     val amount = amountInput.toDoubleOrNull() ?: 0.0
 
-    val tip = calucalteTip(amount)
+    val tip = calucalteTip(amount,percent)
 
     Column (modifier = Modifier
         .statusBarsPadding()
@@ -83,6 +89,10 @@ fun TipTimeLayout()
             .padding(bottom = 32.dp)
             .fillMaxWidth())
 
+        EditPercentField(value = percentInput, onValueChange = {percentInput = it}, modifier = Modifier.
+        padding(bottom = 32.dp).
+            fillMaxWidth())
+
         
         Text(text = stringResource(id = R.string.tip_amount, tip),
             style = MaterialTheme.typography.displaySmall)
@@ -99,7 +109,7 @@ fun TipTimeLayout()
 }
 
 
-fun calucalteTip(cenaRacuna : Double , tipPostotka : Double = 15.0): String {
+fun calucalteTip(cenaRacuna : Double , tipPostotka : Double ): String {
 
     val tip = tipPostotka / 100 * cenaRacuna
 
@@ -124,4 +134,14 @@ fun EditNumberField(value : String ,onValueChange:(String) -> Unit, modifier: Mo
 
 
 
+}
+
+
+@Composable
+fun EditPercentField(value: String, onValueChange: (String) -> Unit, modifier: Modifier = Modifier)
+{
+    TextField(value = value, onValueChange = onValueChange , modifier = Modifier,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        singleLine = true,
+        label = { Text(stringResource(R.string.percent_amount))})
 }
