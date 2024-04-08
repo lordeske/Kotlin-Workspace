@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Moja Aplikacija4</string>
+    <string name="ime_slike">slika1</string>
+    <string name="ime_slike2">slika2</string>
+    <string name="ime_slike3">slika3</string>
+    <string name="ime_slike4">slika4</string>
+    <string name="ime_slike5">slika5</string>
+    <string name="ime_slike6">slika6</string>
+    <string name="ime_slike7">slika7</string>
+</resources>
