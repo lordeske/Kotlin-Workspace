@@ -39,96 +39,72 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PasApp();
+                    PasApp()
                 }
             }
         }
     }
 }
 
-
-
 @Composable
-fun PasApp()
-{
+fun PasApp() {
     LazyColumn {
-        items (psi){
-            PasItem(dog = it,
-                modifier = Modifier
-                    .padding(dimensionResource(R.dimen.padding_small)))
-
+        items(psi) { dog ->
+            PasItem(
+                dog = dog,
+                modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
+            )
         }
     }
 }
-
 
 @Composable
 fun PasItem(
-    dog : Dog,
+    dog: Dog,
     modifier: Modifier = Modifier
-)
-{
-
-    Card (
-        modifier = modifier
-    )
-    {
-        Row (modifier = modifier
-            .fillMaxSize()
-            .padding(dimensionResource(R.dimen.padding_small)))
-
-        {
+) {
+    Card(
+        modifier = modifier.fillMaxSize()
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize()
+        ) {
             PasIcon(pasIcon = dog.imageResouceId)
-            PasInformacije(imePsa = dog.ime, godinePsa =dog.godine )
+            PasInformacije(imePsa = dog.ime, godinePsa = dog.godine)
         }
-
     }
-
-
-
-
-
-
-
 }
-
-
-
-
-
 
 @Composable
 fun PasIcon (
     @DrawableRes pasIcon : Int,
     modifier: Modifier = Modifier
-)
-{
-    Image(painter = painterResource(pasIcon),
-        contentDescription =null ,
+) {
+    Image(
+        painter = painterResource(pasIcon),
+        contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier= modifier
             .size(dimensionResource(R.dimen.image_size))
             .padding(dimensionResource(R.dimen.padding_small))
-            .clip(MaterialTheme.shapes.small))
-
-
+            .clip(MaterialTheme.shapes.small)
+    )
 }
-
-
 
 @Composable
 fun PasInformacije(
     @StringRes imePsa : Int,
     godinePsa : Int ,
     modifier: Modifier =  Modifier
-)
-{
-    Column (modifier = modifier) {
-        Text(text = stringResource(imePsa),
-            modifier = modifier.padding(top = dimensionResource(R.dimen.padding_small) ))
-
-        Text(text = stringResource( godinePsa,"%d godina star"))
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(imePsa),
+            modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+        )
+        Text(
+            text = stringResource(R.string.years_old, godinePsa),
+            modifier = Modifier.padding(top = dimensionResource(R.dimen.padding_small))
+        )
     }
 }
-
-

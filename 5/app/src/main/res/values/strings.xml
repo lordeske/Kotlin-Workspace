@@ -19,6 +19,6 @@
     <string name="dog_description_8">Sunbathing</string>
     <string name="dog_description_9">Sleeping in dangerous places</string>
     <string name="about">About:</string>
-    <string name="years_old">%d years old</string>
+    <string name="years_old">%d godina star</string>
     <string name="expand_button_content_description">See more or less information about a dog.</string>
 </resources>
