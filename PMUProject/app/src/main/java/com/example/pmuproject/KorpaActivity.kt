@@ -1,6 +1,5 @@
 package com.example.pmuproject
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -43,8 +42,8 @@ import com.example.pmuproject.ui.theme.PMUProjectTheme
 
 
 
-/*
-// Lista objekata
+
+//Lista objekata
 @Composable
 fun ListApp(resourceList: List<Proizvod>, modifier: Modifier = Modifier) {
     LazyColumn(
@@ -60,11 +59,11 @@ fun ListApp(resourceList: List<Proizvod>, modifier: Modifier = Modifier) {
         }
     }
 }
-*/
+
 
 
 // Kartica
-/*  @Composable
+  @Composable
 fun ProizvodItem(
     proizvod: Proizvod,
     izmeniClick: () -> Unit,
@@ -112,63 +111,28 @@ fun ProizvodItem(
     }
 }
 
-*/
 
-/// NAVIGACIJA
-@Composable
-fun BottomNavigationBar(
-    selectedNavItem: Int, // Dodaj ovu promenljivu
-    onClickProizvodi: () -> Unit,
-    onClickKorpa: () -> Unit,
-    onClickProfil: () -> Unit
-) {
-    NavigationBar {
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Home, contentDescription = "Pocetna") },
-            label = { Text("Proizvodi") },
-            selected = selectedNavItem == 0, // Ažuriraj selektovanu stavku
-            onClick = onClickProizvodi
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Korpa") },
-            label = { Text("Korpa") },
-            selected = selectedNavItem == 1, // Ažuriraj selektovanu stavku
-            onClick = onClickKorpa
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Profil") },
-            label = { Text("Profil") },
-            selected = selectedNavItem == 2, // Ažuriraj selektovanu stavku
-            onClick = onClickProfil
-        )
-    }
-}
 
-class MainActivity : ComponentActivity() {
-    private var selectedNavItem by mutableStateOf(0) // Dodaj ovu promenljivu
+
+
+
+
+
+/// MAIN
+class KorpaActivity : ComponentActivity() {
+    private var selectedNavItem by mutableStateOf(1) // Dodaj ovu promenljivu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PMUProjectTheme {
                 Scaffold(
-                    bottomBar = {
-                        BottomNavigationBar(
-                            selectedNavItem = selectedNavItem, // Prosledi trenutno selektovanu stavku
-                            onClickProizvodi = {
-                                selectedNavItem = 0 // Ažuriraj trenutno selektovanu stavku
-                                /* Akcija za Proizvodi */
-                            },
-                            onClickKorpa = {
-                                selectedNavItem = 1 // Ažuriraj trenutno selektovanu stavku
-                                startActivity(Intent(this@MainActivity, KorpaActivity::class.java))
-                            },
-                            onClickProfil = {
-                                selectedNavItem = 2 // Ažuriraj trenutno selektovanu stavku
-                                /* Akcija za Profil */
-                            }
-                        )
-                    }
+                    bottomBar = { BottomNavigationBar(
+                        selectedNavItem = selectedNavItem, // Prosledi trenutno selektovanu stavku
+                        onClickProizvodi = { /* Akcija za Proizvodi */ },
+                        onClickKorpa = { /* Akcija za Korpa */ },
+                        onClickProfil = { /* Akcija za Profil */ } )}
+
                 ) { padding ->
                     Surface(
                         modifier = Modifier
@@ -176,7 +140,7 @@ class MainActivity : ComponentActivity() {
                             .padding(padding),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        // Ovde možeš dodati ostali sadržaj
+                        ListApp(resourceList = Datasource.ucitajProizvode())
                     }
                 }
             }
