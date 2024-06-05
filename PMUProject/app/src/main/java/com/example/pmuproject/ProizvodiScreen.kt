@@ -24,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.pmuproject.Klase.Korpa
 import com.example.pmuproject.shop.ProizvodDT
 
 @Composable
@@ -41,7 +40,7 @@ fun ProizvodiScreen() {
                 sacuvajIzmeneClick = { izmenjenProizvod ->
                     proizvodi = proizvodi.map { if (it.id == izmenjenProizvod.id) izmenjenProizvod else it }
                 },
-                dodajUKorpuClick = { Korpa.Korpa.dodajProizvod(proizvod) }
+                dodajUKorpuClick = {  }
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
