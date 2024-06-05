@@ -1,6 +1,6 @@
 package com.example.pmuproject.Klase
 
-import com.example.pmuproject.shop.Proizvod
+import com.example.pmuproject.shop.ProizvodDT
 
 class Korpa {
 
@@ -8,17 +8,17 @@ class Korpa {
 
 
     object Korpa {
-        private val proizvodi = mutableListOf<Proizvod>()
+        private val proizvodi = mutableListOf<ProizvodDT>()
 
-        fun dodajProizvod(proizvod: Proizvod) {
-            proizvodi.add(proizvod)
+        fun dodajProizvod(proizvodDT: ProizvodDT) {
+            proizvodi.add(proizvodDT)
         }
 
-        fun izbaciProizvod(proizvod: Proizvod) {
-            proizvodi.remove(proizvod)
+        fun izbaciProizvod(proizvodDT: ProizvodDT) {
+            proizvodi.remove(proizvodDT)
         }
 
-        fun getProizvodi(): List<Proizvod> {
+        fun getProizvodi(): List<ProizvodDT> {
             return proizvodi.toList()
         }
     }

@@ -1,182 +1,53 @@
 package com.example.pmuproject
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.pmuproject.shop.Datasource
-import com.example.pmuproject.shop.Proizvod
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.pmuproject.KorpaScreen
+import com.example.pmuproject.ProfilScreen
+import com.example.pmuproject.ProizvodiScreen
 import com.example.pmuproject.ui.theme.PMUProjectTheme
 
-
-
-
-
-/*
-// Lista objekata
-@Composable
-fun ListApp(resourceList: List<Proizvod>, modifier: Modifier = Modifier) {
-    LazyColumn(
-        modifier = modifier
-    ) {
-        items(resourceList) { proizvod ->
-            ProizvodItem(
-                proizvod = proizvod,
-                izmeniClick = { /* Implementiraj logiku za izmenu proizvoda */ },
-                dodajUKorpuClick = { /* Implementiraj logiku za dodavanje proizvoda u korpu */ }
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-    }
-}
-*/
-
-
-// Kartica
-/*  @Composable
-fun ProizvodItem(
-    proizvod: Proizvod,
-    izmeniClick: () -> Unit,
-    dodajUKorpuClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = proizvod.naziv, style = MaterialTheme.typography.headlineSmall)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Cena: ${proizvod.cena}", style = MaterialTheme.typography.bodySmall)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Datum dostave: ${proizvod.datumDostave}", style = MaterialTheme.typography.bodySmall)
-
-            // Dodaj dugmad "Izmeni" i "Dodaj u korpu" skroz desno
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Button(
-                    onClick = izmeniClick,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(36.dp)
-                ) {
-                    Text("Izmeni")
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                Button(
-                    onClick = dodajUKorpuClick,
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(36.dp)
-                ) {
-                    Text("Dodaj")
-                }
-            }
-        }
-    }
-}
-
-*/
-
-/// NAVIGACIJA
-@Composable
-fun BottomNavigationBar(
-    selectedNavItem: Int, // Dodaj ovu promenljivu
-    onClickProizvodi: () -> Unit,
-    onClickKorpa: () -> Unit,
-    onClickProfil: () -> Unit
-) {
-    NavigationBar {
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Home, contentDescription = "Pocetna") },
-            label = { Text("Proizvodi") },
-            selected = selectedNavItem == 0, // Ažuriraj selektovanu stavku
-            onClick = onClickProizvodi
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Korpa") },
-            label = { Text("Korpa") },
-            selected = selectedNavItem == 1, // Ažuriraj selektovanu stavku
-            onClick = onClickKorpa
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Profil") },
-            label = { Text("Profil") },
-            selected = selectedNavItem == 2, // Ažuriraj selektovanu stavku
-            onClick = onClickProfil
-        )
-    }
-}
-
 class MainActivity : ComponentActivity() {
-    private var selectedNavItem by mutableStateOf(0) // Dodaj ovu promenljivu
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PMUProjectTheme {
+                val navController = rememberNavController()
+
                 Scaffold(
                     bottomBar = {
-                        BottomNavigationBar(
-                            selectedNavItem = selectedNavItem, // Prosledi trenutno selektovanu stavku
-                            onClickProizvodi = {
-                                selectedNavItem = 0 // Ažuriraj trenutno selektovanu stavku
-                                /* Akcija za Proizvodi */
-                            },
-                            onClickKorpa = {
-                                selectedNavItem = 1 // Ažuriraj trenutno selektovanu stavku
-                                startActivity(Intent(this@MainActivity, KorpaActivity::class.java))
-                            },
-                            onClickProfil = {
-                                selectedNavItem = 2 // Ažuriraj trenutno selektovanu stavku
-                                /* Akcija za Profil */
-                            }
-                        )
+                        BottomNavigationBar(navController)
                     }
                 ) { padding ->
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(padding),
-                        color = MaterialTheme.colorScheme.background
+                    NavHost(
+                        navController = navController,
+                        startDestination = "proizvodi",
+                        modifier = Modifier.padding(padding)  // Apply the padding here
                     ) {
-                        // Ovde možeš dodati ostali sadržaj
+                        composable("proizvodi") {
+                            ProizvodiScreen()
+                        }
+                        composable("korpa") { KorpaScreen() }
+                        composable("profil") { ProfilScreen() }
                     }
                 }
             }
@@ -184,7 +55,53 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable
+fun BottomNavigationBar(navController: NavController) {
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = currentBackStackEntry?.destination
 
-
-
-
+    NavigationBar {
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.Home, contentDescription = "Pocetna") },
+            label = { Text("Proizvodi") },
+            selected = currentDestination?.route == "proizvodi",
+            onClick = {
+                navController.navigate("proizvodi") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Korpa") },
+            label = { Text("Korpa") },
+            selected = currentDestination?.route == "korpa",
+            onClick = {
+                navController.navigate("korpa") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Profil") },
+            label = { Text("Profil") },
+            selected = currentDestination?.route == "profil",
+            onClick = {
+                navController.navigate("profil") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }
+        )
+    }
+}

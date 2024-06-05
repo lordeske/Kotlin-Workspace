@@ -1,6 +1,6 @@
 package com.example.pmuproject.shop
 
-data class Korisnik(
+data class KorisnikDT(
     val id: Int,
     var ime: String,
     var email: String,
