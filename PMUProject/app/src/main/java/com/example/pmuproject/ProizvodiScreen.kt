@@ -1,34 +1,20 @@
 package com.example.pmuproject
 
-
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmuproject.shop.ProizvodDT
 
+
 @Composable
-fun ProizvodiScreen() {
-    var proizvodi by remember { mutableStateOf(Datasource.ucitajProizvode()) }
+fun ProizvodiScreen(proizvodiViewModel: ProizvodiViewModel = viewModel()) {
+    val proizvodi by proizvodiViewModel.proizvodi.collectAsState()
 
     LazyColumn(
         modifier = Modifier.padding(16.dp)
@@ -38,16 +24,14 @@ fun ProizvodiScreen() {
                 proizvod = proizvod,
                 izmeniClick = { /* Implementiraj logiku za izmenu proizvoda */ },
                 sacuvajIzmeneClick = { izmenjenProizvod ->
-                    proizvodi = proizvodi.map { if (it.id == izmenjenProizvod.id) izmenjenProizvod else it }
+                    proizvodiViewModel.izmeniProizvod(izmenjenProizvod)
                 },
-                dodajUKorpuClick = {  }
+                dodajUKorpuClick = { Korpa.dodajProizvod(proizvod) }
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
-
-
 
 @Composable
 fun ProizvodItem(
@@ -63,13 +47,10 @@ fun ProizvodItem(
     var datumDostave by remember { mutableStateOf(proizvod.datumDostave.toString()) }
 
     Card(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
+        Column(modifier = Modifier.padding(16.dp)) {
             if (izmena) {
                 TextField(
                     value = naziv,
@@ -161,17 +142,26 @@ fun ProizvodItem(
     }
 }
 
-
 object Datasource {
     fun ucitajProizvode(): List<ProizvodDT> {
         return listOf(
             ProizvodDT(1, "Proizvod 1", 100.0, 20230601),
             ProizvodDT(2, "Proizvod 2", 150.0, 20230602),
-            ProizvodDT(3, "Proizvod 2", 150.0, 20230602),
-            ProizvodDT(4, "Proizvod 2", 150.0, 20230602),
-            ProizvodDT(5, "Proizvod 2", 150.0, 20230602)
-
-            // Dodajte još proizvoda po potrebi
+            ProizvodDT(3, "Proizvod 3", 200.0, 20230603),
+            ProizvodDT(4, "Proizvod 4", 250.0, 20230604),
+            ProizvodDT(5, "Proizvod 5", 300.0, 20230605)
         )
+    }
+}
+
+object Korpa {
+    private val korpa = mutableListOf<ProizvodDT>()
+
+    fun dodajProizvod(proizvod: ProizvodDT) {
+        korpa.add(proizvod)
+    }
+
+    fun getProizvodi(): List<ProizvodDT> {
+        return korpa
     }
 }

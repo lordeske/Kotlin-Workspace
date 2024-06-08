@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(padding)  // Apply the padding here
                     ) {
                         composable("proizvodi") {
-                            ProizvodiScreen()
+                            val proizvodiViewModel: ProizvodiViewModel = viewModel()
+                            ProizvodiScreen(proizvodiViewModel = proizvodiViewModel)
                         }
                         composable("korpa") { KorpaScreen() }
                         composable("profil") { ProfilScreen() }
@@ -88,10 +90,9 @@ fun BottomNavigationBar(navController: NavController) {
                 }
             }
         )
-
         NavigationBarItem(
             icon = { Icon(Icons.Default.Favorite, contentDescription = "Porudzbine") },
-            label = { Text("porudzbine") },
+            label = { Text("Porudzbine") },
             selected = currentDestination?.route == "porudzbine",
             onClick = {
                 navController.navigate("porudzbine") {
