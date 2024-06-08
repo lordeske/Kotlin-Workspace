@@ -1,5 +1,6 @@
 package com.example.pmuproject
 
+import ProfilScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.pmuproject.ViewModeli.ProizvodiViewModel
 import com.example.pmuproject.ui.theme.PMUProjectTheme
 
 class MainActivity : ComponentActivity() {
