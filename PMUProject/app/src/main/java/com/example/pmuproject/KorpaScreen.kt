@@ -65,7 +65,7 @@ fun KorpaScreen(
                                     modifier = Modifier.padding(bottom = 4.dp)
                                 )
                                 Text(
-                                    text = "Cena: ${proizvod.cena}",
+                                    text = "Cena: ${proizvod.cena} RSD",
                                     style = MaterialTheme.typography.bodySmall
                                 )
                             }
@@ -81,7 +81,7 @@ fun KorpaScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Ukupna vrednost: $ukupnaCena",
+                text = "Ukupna vrednost: $ukupnaCena RSD",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )

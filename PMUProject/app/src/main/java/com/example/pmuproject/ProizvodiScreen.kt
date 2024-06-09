@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pmuproject.Klase.Korpa
@@ -22,7 +23,9 @@ fun ProizvodiScreen(
     val proizvodi by proizvodiViewModel.proizvodi.collectAsState()
 
     LazyColumn(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
         items(proizvodi) { proizvod ->
             ProizvodItem(
@@ -41,7 +44,10 @@ fun ProizvodiScreen(
 }
 
 
+
+
 @Composable
+
 fun ProizvodItem(
     proizvod: ProizvodDT,
     izmeniClick: () -> Unit,
@@ -56,7 +62,8 @@ fun ProizvodItem(
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             if (izmena) {
@@ -66,21 +73,21 @@ fun ProizvodItem(
                     label = { Text("Naziv") },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = cena,
                     onValueChange = { cena = it },
                     label = { Text("Cena") },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 TextField(
                     value = datumDostave,
                     onValueChange = { datumDostave = it },
-                    label = { Text("Datum dostave") },
+                    label = { Text("Vreme dostave") },
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
@@ -93,33 +100,33 @@ fun ProizvodItem(
                                     proizvod.id,
                                     naziv,
                                     cena.toDouble(),
-                                    datumDostave.toInt()
+                                    datumDostave.toString()
                                 )
                             )
                         },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(36.dp)
+                            .padding(4.dp)
                     ) {
-                        Text("Sačuvaj")
+                        Text("Sačuvaj", color = MaterialTheme.colorScheme.onPrimary)
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = { izmena = false },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(36.dp)
+                            .padding(4.dp)
                     ) {
-                        Text("Odustani")
+                        Text("Odustani", color = MaterialTheme.colorScheme.onSecondary)
                     }
                 }
             } else {
-                Text(text = proizvod.naziv, style = MaterialTheme.typography.headlineSmall)
+                Text(text = proizvod.naziv, style = MaterialTheme.typography.titleLarge)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Cena: ${proizvod.cena}", style = MaterialTheme.typography.bodySmall)
+                Text(text = "Cena: ${proizvod.cena} RSD", style = MaterialTheme.typography.bodyMedium)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Datum dostave: ${proizvod.datumDostave}", style = MaterialTheme.typography.bodySmall)
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = "Dostava traje: ${proizvod.datumDostave}", style = MaterialTheme.typography.bodyMedium)
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
@@ -129,23 +136,24 @@ fun ProizvodItem(
                             izmena = true
                             izmeniClick()
                         },
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(36.dp)
+                            .padding(4.dp)
                     ) {
-                        Text("Izmeni")
+                        Text("Izmeni", color = MaterialTheme.colorScheme.onPrimary)
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     Button(
                         onClick = dodajUKorpuClick,
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
                         modifier = Modifier
-                            .width(100.dp)
-                            .height(36.dp)
+                            .padding(4.dp)
                     ) {
-                        Text("Dodaj")
+                        Text("Dodaj", color = MaterialTheme.colorScheme.onSecondary)
                     }
                 }
             }
         }
     }
 }
+

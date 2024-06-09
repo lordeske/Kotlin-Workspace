@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable("profil") { ProfilScreen(profilViewModel) }
-                        composable("porudzbine") { PorudzbineScreen() }
+
                     }
                 }
             }
@@ -120,20 +120,7 @@ fun BottomNavigationBar(navController: NavController) {
                 }
             }
         )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Favorite, contentDescription = "Porudzbine") },
-            label = { Text("Porudzbine") },
-            selected = currentDestination?.route == "porudzbine",
-            onClick = {
-                navController.navigate("porudzbine") {
-                    popUpTo(navController.graph.startDestinationId) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
-            }
-        )
+
         NavigationBarItem(
             icon = { Icon(Icons.Default.AccountCircle, contentDescription = "Profil") },
             label = { Text("Profil") },

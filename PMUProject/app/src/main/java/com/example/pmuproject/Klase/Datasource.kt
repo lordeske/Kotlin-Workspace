@@ -8,11 +8,11 @@ class Datasource {
 
         fun ucitajProizvode(): List<ProizvodDT> {
             return listOf(
-                ProizvodDT(1, "Proizvod 1", 100.0, 20230601),
-                ProizvodDT(2, "Proizvod 2", 150.0, 20230602),
-                ProizvodDT(3, "Proizvod 3", 200.0, 20230603),
-                ProizvodDT(4, "Proizvod 4", 250.0, 20230604),
-                ProizvodDT(5, "Proizvod 5", 300.0, 20230605)
+                ProizvodDT(1, "Logitech Mis", 100.0, "2 dana"),
+                ProizvodDT(2, "Redragon tastatura", 150.0, "3 dana"),
+                ProizvodDT(3, "USB kabal", 200.0, "3 dana"),
+                ProizvodDT(4, "Nokia Lumia", 250.0, "2 dana"),
+                ProizvodDT(5, "IPhone 69 Pro", 300.0, "4 dana")
             )
         }
 

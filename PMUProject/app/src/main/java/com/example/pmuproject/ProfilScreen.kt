@@ -21,7 +21,7 @@ fun ProfilScreen(profilViewModel: ProfilViewModel = viewModel()) {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.DarkGray // Use a dark color for the background
+
     ) {
         Box(
             modifier = Modifier
