@@ -9,13 +9,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pmuproject.Klase.Korpa
+import com.example.pmuproject.ViewModeli.KorpaViewModel
 import com.example.pmuproject.ViewModeli.ProizvodiViewModel
 import com.example.pmuproject.shop.ProizvodDT
 
-
 @Composable
-fun ProizvodiScreen(proizvodiViewModel: ProizvodiViewModel = viewModel()) {
+fun ProizvodiScreen(
+    proizvodiViewModel: ProizvodiViewModel = viewModel(),
+    korpaViewModel: KorpaViewModel = viewModel()
+) {
     val proizvodi by proizvodiViewModel.proizvodi.collectAsState()
+    val korpa by korpaViewModel.korpa.collectAsState()
 
     LazyColumn(
         modifier = Modifier.padding(16.dp)
@@ -27,11 +32,15 @@ fun ProizvodiScreen(proizvodiViewModel: ProizvodiViewModel = viewModel()) {
                 sacuvajIzmeneClick = { izmenjenProizvod ->
                     proizvodiViewModel.izmeniProizvod(izmenjenProizvod)
                 },
-                dodajUKorpuClick = { Korpa.dodajProizvod(proizvod) }
+                dodajUKorpuClick = {
+                    korpaViewModel.dodajUKorpu(proizvod)
+                }
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
+
+    KorpaScreen(korpa = korpa)
 }
 
 @Composable
@@ -140,29 +149,5 @@ fun ProizvodItem(
                 }
             }
         }
-    }
-}
-
-object Datasource {
-    fun ucitajProizvode(): List<ProizvodDT> {
-        return listOf(
-            ProizvodDT(1, "Proizvod 1", 100.0, 20230601),
-            ProizvodDT(2, "Proizvod 2", 150.0, 20230602),
-            ProizvodDT(3, "Proizvod 3", 200.0, 20230603),
-            ProizvodDT(4, "Proizvod 4", 250.0, 20230604),
-            ProizvodDT(5, "Proizvod 5", 300.0, 20230605)
-        )
-    }
-}
-
-object Korpa {
-    private val korpa = mutableListOf<ProizvodDT>()
-
-    fun dodajProizvod(proizvod: ProizvodDT) {
-        korpa.add(proizvod)
-    }
-
-    fun getProizvodi(): List<ProizvodDT> {
-        return korpa
     }
 }

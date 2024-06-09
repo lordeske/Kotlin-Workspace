@@ -16,6 +16,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,6 +25,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.pmuproject.ViewModeli.KorpaViewModel
 import com.example.pmuproject.ViewModeli.ProizvodiViewModel
 import com.example.pmuproject.ui.theme.PMUProjectTheme
 
@@ -33,6 +35,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PMUProjectTheme {
                 val navController = rememberNavController()
+                val korpaViewModel: KorpaViewModel = viewModel()
 
                 Scaffold(
                     bottomBar = {
@@ -42,13 +45,19 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = "proizvodi",
-                        modifier = Modifier.padding(padding)  // Apply the padding here
+                        modifier = Modifier.padding(padding)
                     ) {
                         composable("proizvodi") {
                             val proizvodiViewModel: ProizvodiViewModel = viewModel()
-                            ProizvodiScreen(proizvodiViewModel = proizvodiViewModel)
+                            ProizvodiScreen(
+                                proizvodiViewModel = proizvodiViewModel,
+                                korpaViewModel = korpaViewModel
+                            )
                         }
-                        composable("korpa") { KorpaScreen() }
+                        composable("korpa") {
+                            val korpa by korpaViewModel.korpa.collectAsState()
+                            KorpaScreen(korpa = korpa)
+                        }
                         composable("profil") { ProfilScreen() }
                         composable("porudzbine") { PorudzbineScreen() }
                     }
@@ -57,6 +66,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
