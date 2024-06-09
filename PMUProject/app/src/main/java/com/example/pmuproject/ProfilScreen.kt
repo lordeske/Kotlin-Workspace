@@ -77,7 +77,7 @@ fun ProfilScreen(profilViewModel: ProfilViewModel = viewModel()) {
 
                 // Prikaži broj kupljenih proizvoda
                 Text(
-                    text = "Ukupno puta porucio: ${profilViewModel.brojKupljenihProizvoda}",
+                    text = "Ukupno puta poručio: ${profilViewModel.brojKupljenihProizvoda}",
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.White // Ensure the text color is readable on the dark background
                 )
@@ -104,5 +104,6 @@ fun KorisnickaSlika(
             )
     )
 }
+
 
 

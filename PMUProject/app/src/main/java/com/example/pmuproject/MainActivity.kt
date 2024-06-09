@@ -1,6 +1,7 @@
 package com.example.pmuproject
 
 import ProfilScreen
+import ProfilViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
             PMUProjectTheme {
                 val navController = rememberNavController()
                 val korpaViewModel: KorpaViewModel = viewModel()
+                val profilViewModel: ProfilViewModel = viewModel()
 
                 Scaffold(
                     bottomBar = {
@@ -64,10 +66,11 @@ class MainActivity : ComponentActivity() {
                                 ukupnaCena = korpaViewModel.ukupnaCena(),
                                 onPoruciClick = {
                                     korpaViewModel.ocistiKorpu()
+                                    profilViewModel.povecajBrojKupljenihProizvoda()
                                 }
                             )
                         }
-                        composable("profil") { ProfilScreen() }
+                        composable("profil") { ProfilScreen(profilViewModel) }
                         composable("porudzbine") { PorudzbineScreen() }
                     }
                 }
@@ -75,6 +78,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 
 
 
