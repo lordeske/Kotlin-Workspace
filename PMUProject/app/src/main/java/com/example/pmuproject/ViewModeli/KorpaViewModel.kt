@@ -25,4 +25,17 @@ class KorpaViewModel : ViewModel() {
         }
     }
 
+    fun ukupnaCena(): Double {
+        return _korpa.value.sumOf { it.cena }
+
+
+    }
+
+
+    fun ocistiKorpu() {
+        viewModelScope.launch {
+            _korpa.value = emptyList()
+        }
+    }
+
 }

@@ -58,8 +58,12 @@ class MainActivity : ComponentActivity() {
                             val korpa by korpaViewModel.korpa.collectAsState()
                             KorpaScreen(
                                 korpa = korpa,
-                                onSadaClick = { proizvod ->
-                                    // Implementacija za dugme "Sada"
+                                onUkloniClick = { proizvod ->
+                                    korpaViewModel.obrisiIzKorpe(proizvod)
+                                },
+                                ukupnaCena = korpaViewModel.ukupnaCena(),
+                                onPoruciClick = {
+                                    korpaViewModel.ocistiKorpu()
                                 }
                             )
                         }
@@ -71,6 +75,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
+
 
 
 
