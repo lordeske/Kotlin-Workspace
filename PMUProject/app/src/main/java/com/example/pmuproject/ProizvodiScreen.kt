@@ -20,7 +20,6 @@ fun ProizvodiScreen(
     korpaViewModel: KorpaViewModel = viewModel()
 ) {
     val proizvodi by proizvodiViewModel.proizvodi.collectAsState()
-    val korpa by korpaViewModel.korpa.collectAsState()
 
     LazyColumn(
         modifier = Modifier.padding(16.dp)
@@ -39,9 +38,8 @@ fun ProizvodiScreen(
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
-
-    KorpaScreen(korpa = korpa)
 }
+
 
 @Composable
 fun ProizvodItem(

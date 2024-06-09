@@ -18,4 +18,11 @@ class KorpaViewModel : ViewModel() {
             _korpa.value = _korpa.value + proizvod
         }
     }
+
+    fun obrisiIzKorpe(proizvod: ProizvodDT) {
+        viewModelScope.launch {
+            _korpa.value = _korpa.value - proizvod
+        }
+    }
+
 }

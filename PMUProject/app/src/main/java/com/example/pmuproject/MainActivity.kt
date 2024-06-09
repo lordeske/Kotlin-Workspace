@@ -56,7 +56,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("korpa") {
                             val korpa by korpaViewModel.korpa.collectAsState()
-                            KorpaScreen(korpa = korpa)
+                            KorpaScreen(
+                                korpa = korpa,
+                                onSadaClick = { proizvod ->
+                                    // Implementacija za dugme "Sada"
+                                }
+                            )
                         }
                         composable("profil") { ProfilScreen() }
                         composable("porudzbine") { PorudzbineScreen() }
@@ -66,6 +71,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+
 
 
 @Composable
