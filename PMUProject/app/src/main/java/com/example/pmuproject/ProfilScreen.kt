@@ -17,10 +17,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun ProfilScreen(profilViewModel: ProfilViewModel = viewModel()) {
     var novoIme by remember { mutableStateOf(TextFieldValue(profilViewModel.ime)) }
+    var ime by remember { mutableStateOf(profilViewModel.ime) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        color = Color.DarkGray // Use a dark color for the background
     ) {
         Box(
             modifier = Modifier
@@ -42,8 +43,9 @@ fun ProfilScreen(profilViewModel: ProfilViewModel = viewModel()) {
 
                 // Prikaži ime korisnika
                 Text(
-                    text = "Ime: ${profilViewModel.ime}",
-                    style = MaterialTheme.typography.headlineSmall
+                    text = "Ime: $ime",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = Color.White // Ensure the text color is readable on the dark background
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -61,6 +63,7 @@ fun ProfilScreen(profilViewModel: ProfilViewModel = viewModel()) {
                 // Dugme za potvrdu promene imena
                 Button(
                     onClick = {
+                        ime = novoIme.text
                         profilViewModel.ime = novoIme.text
                         // Ovde možete dodati logiku za čuvanje novog imena u bazi podataka ili slično
                     },
@@ -74,8 +77,9 @@ fun ProfilScreen(profilViewModel: ProfilViewModel = viewModel()) {
 
                 // Prikaži broj kupljenih proizvoda
                 Text(
-                    text = "Ukupno kupljenih proizvoda: ${profilViewModel.brojKupljenihProizvoda}",
-                    style = MaterialTheme.typography.headlineSmall
+                    text = "Ukupno puta porucio: ${profilViewModel.brojKupljenihProizvoda}",
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = Color.White // Ensure the text color is readable on the dark background
                 )
             }
         }
@@ -100,3 +104,5 @@ fun KorisnickaSlika(
             )
     )
 }
+
+
